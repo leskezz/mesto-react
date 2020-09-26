@@ -1,0 +1,11 @@
+@import url(./__grid/elements__grid.css);
+
+.elements {
+    padding-top: 51px;
+}
+
+@media screen and (max-width: 624px) {
+    .elements {
+        padding-top: 36px;
+    }
+}

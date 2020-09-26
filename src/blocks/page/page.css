@@ -1,0 +1,29 @@
+.page {
+    min-width: 300px;
+    max-width: 1200px;
+    padding: 0 199px 0;
+    font-family: 'Inter', ‘Arial’, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-size-adjust: 100%;
+    margin: 0 auto;
+}
+
+@media screen and (max-width: 1279px) {
+    .page {
+        padding: 0;
+        max-width: 882px;
+    }
+}
+
+@media screen and (max-width: 1023px) {
+    .page {
+        padding: 0 70px 0;
+    }
+}
+
+@media screen and (max-width: 725px) {
+    .page {
+        padding: 0;
+        max-width: 585px;
+    }
+}
