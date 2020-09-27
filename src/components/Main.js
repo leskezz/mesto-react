@@ -60,7 +60,7 @@ function Main (props) {
 
                         {cards.length ?
                         cards.map (card => (
-                            <Card key={card._id} card={card} deleteCardButton={props.deleteCardButton} />
+                            <Card key={card._id} card={card} deleteCardButton={props.deleteCardButton} onCardClick={props.onCardClick} />
                         ))
                         : 
                         <li className='element element_empty'>Здесь пока ничего нет</li>                    
@@ -109,7 +109,7 @@ function Main (props) {
 
             <PopupWithForm name='delete-element' title='Вы уверены?' buttonName='Да' closeButtonImage={props.addButtonImage} onClose={props.closeAllPopups} />
 
-            <ImagePopup closeButtonImage={props.addButtonImage} onClose={props.closeAllPopups} />
+            <ImagePopup closeButtonImage={props.addButtonImage} onClose={props.closeAllPopups} card={props.selectedCard} isOpen={props.isCardImagePopupOpen} />
 
         </>
     )

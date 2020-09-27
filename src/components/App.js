@@ -13,6 +13,8 @@ function App() {
     const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState();
     const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState();
     const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState();
+    const [selectedCard, setSelectedCard] = React.useState({});
+    const [isCardImagePopupOpen, setCardImagePopupOpen] = React.useState();
 
     function handleEditAvatarClick() {
         setEditAvatarPopupOpen(true);
@@ -30,6 +32,13 @@ function App() {
         setEditAvatarPopupOpen(false);
         setEditProfilePopupOpen(false);
         setAddPlacePopupOpen(false);
+        setCardImagePopupOpen(false);
+        setSelectedCard({});
+    };
+
+    function handleCardClick(clickedCard) {
+        setSelectedCard(clickedCard);
+        setCardImagePopupOpen(true);
     }
 
     return (
@@ -37,7 +46,7 @@ function App() {
 
         <Header logo={logo} />
 
-        <Main addButtonImage={addButtonImage} editButtonImage={editButtonImage} onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} isEditProfilePopupOpen={isEditProfilePopupOpen} isAddPlacePopupOpen={isAddPlacePopupOpen} isEditAvatarPopupOpen={isEditAvatarPopupOpen} closeAllPopups={closeAllPopups} deleteCardButton={deleteCardButton} />
+        <Main addButtonImage={addButtonImage} editButtonImage={editButtonImage} onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} isEditProfilePopupOpen={isEditProfilePopupOpen} isAddPlacePopupOpen={isAddPlacePopupOpen} isEditAvatarPopupOpen={isEditAvatarPopupOpen} closeAllPopups={closeAllPopups} deleteCardButton={deleteCardButton} onCardClick={handleCardClick} selectedCard={selectedCard} isCardImagePopupOpen={isCardImagePopupOpen} />
 
         <Footer />
 
