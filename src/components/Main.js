@@ -1,19 +1,8 @@
 import React from 'react';
 import PopupWithForm from './PopupWithForm.js';
+import ImagePopup from './ImagePopup.js';
 
 function Main (props) {
-
-    function handleEditAvatarClick() {
-        document.querySelector('.popup_btn_edit-avatar').classList.add('popup_opened');
-    };
-
-    function handleEditProfileClick() {
-        document.querySelector('.popup_btn_edit-profile').classList.add('popup_opened');
-    };
-
-    function handleAddPlaceClick () {
-        document.querySelector('.popup_btn_add-element').classList.add('popup_opened');
-    };
 
     return (
         <>
@@ -22,13 +11,13 @@ function Main (props) {
                 <section className="profile">
 
                     <div className="profile__avatar">
-                        <button type="button" className="profile__photo-edit" onClick={handleEditAvatarClick}>
+                        <button type="button" className="profile__photo-edit" onClick={props.onEditAvatar}>
                             <img src="#" className="profile__photo" alt="Фото профиля" />
                         </button>
                             <div className="profile__info">
                                 <div className="profile__heading">
                                     <h1 className="profile__name"></h1>
-                                    <button type="button" className="profile__edit-button" onClick={handleEditProfileClick}>
+                                    <button type="button" className="profile__edit-button" onClick={props.onEditProfile}>
                                         <img src={props.editButtonImage} className="profile__edit-image" alt="Правка" />
                                     </button>
                                 </div>
@@ -36,7 +25,7 @@ function Main (props) {
                             </div>
 
                     </div>
-                        <button type="button" className="profile__add-button" onClick={handleAddPlaceClick}>
+                        <button type="button" className="profile__add-button" onClick={props.onAddPlace}>
                             <img src={props.addButtonImage} className="profile__add-image" alt="Добавить" />
                         </button>
 
@@ -54,7 +43,7 @@ function Main (props) {
 
             </main>
 
-            <PopupWithForm name='edit-profile' title='Редактировать профиль' buttonName='Сохранить' closeButtonImage={props.addButtonImage}>
+            <PopupWithForm name='edit-profile' title='Редактировать профиль' buttonName='Сохранить' closeButtonImage={props.addButtonImage} isOpen={props.isEditProfilePopupOpen} onClose={props.closeAllPopups}>
                 <fieldset className="popup__inputs-container">
                     <label className ="popup__input-container">
                         <input id="input__name" type="text" className="popup__item popup__item_el_name" placeholder="Ваше имя" name="name" minLength="2" maxLength="40" required />
@@ -67,7 +56,7 @@ function Main (props) {
                 </fieldset>
             </PopupWithForm>
 
-            <PopupWithForm name='add-element' title='Новое место' buttonName='Создать' closeButtonImage={props.addButtonImage}>
+            <PopupWithForm name='add-element' title='Новое место' buttonName='Создать' closeButtonImage={props.addButtonImage} isOpen={props.isAddPlacePopupOpen} onClose={props.closeAllPopups}>
                 <fieldset className="popup__inputs-container">
                     <label className ="popup__input-container">
                         <input id="input__place" type="text" className="popup__item popup__item_el_place" placeholder="Название" name="name" minLength="1" maxLength="30" required />
@@ -80,7 +69,7 @@ function Main (props) {
                 </fieldset>
             </PopupWithForm>
 
-            <PopupWithForm name='edit-avatar' title='Обновить аватар' buttonName='Сохранить' closeButtonImage={props.addButtonImage}>
+            <PopupWithForm name='edit-avatar' title='Обновить аватар' buttonName='Сохранить' closeButtonImage={props.addButtonImage} isOpen={props.isEditAvatarPopupOpen} onClose={props.closeAllPopups}>
                 <fieldset className="popup__inputs-container">
                     <label className ="popup__input-container">
                         <input id="input__link" type="url" className="popup__item popup__item_el_link" placeholder="Ссылка на картинку" name="avatar" required />
@@ -89,18 +78,9 @@ function Main (props) {
                 </fieldset>
             </PopupWithForm>
 
-            <PopupWithForm name='delete-element' title='Вы уверены?' buttonName='Да' closeButtonImage={props.addButtonImage} />
+            <PopupWithForm name='delete-element' title='Вы уверены?' buttonName='Да' closeButtonImage={props.addButtonImage} onClose={props.closeAllPopups} />
 
-            <section className="popup popup_btn_card-image">
-                <div className='card-full-size'>
-                    <img className='card-full-size__image' src='#' alt='' />
-                    <h3 className='card-full-size__heading'>
-                    </h3>
-                    <button type="button" className="popup__close-button">
-                        <img src="./images/Add-button__plus.svg" className="popup__close-image" alt="Закрыть" />
-                    </button>
-                </div>
-            </section>
+            <ImagePopup closeButtonImage={props.addButtonImage} onClose={props.closeAllPopups} />
 
         </>
     )

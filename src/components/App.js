@@ -8,12 +8,35 @@ import Footer from './Footer.js';
 
 
 function App() {
+
+    const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState();
+    const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState();
+    const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState();
+
+    function handleEditAvatarClick() {
+        setEditAvatarPopupOpen(true);
+    };
+
+    function handleEditProfileClick() {
+        setEditProfilePopupOpen(true);
+    };
+
+    function handleAddPlaceClick () {
+        setAddPlacePopupOpen(true);
+    };
+
+    function closeAllPopups() {
+        setEditAvatarPopupOpen(false);
+        setEditProfilePopupOpen(false);
+        setAddPlacePopupOpen(false);
+    }
+
     return (
     <div className="page">
 
         <Header logo={logo} />
 
-        <Main addButtonImage={addButtonImage} editButtonImage={editButtonImage} />
+        <Main addButtonImage={addButtonImage} editButtonImage={editButtonImage} onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} isEditProfilePopupOpen={isEditProfilePopupOpen} isAddPlacePopupOpen={isAddPlacePopupOpen} isEditAvatarPopupOpen={isEditAvatarPopupOpen} closeAllPopups={closeAllPopups} />
 
         <Footer />
 
