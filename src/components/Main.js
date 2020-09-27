@@ -1,8 +1,28 @@
 import React from 'react';
 import PopupWithForm from './PopupWithForm.js';
 import ImagePopup from './ImagePopup.js';
+import api from '../utils/Api.js';
 
 function Main (props) {
+
+    const [userName, setUserName] = React.useState();
+    const [userDescription, setUserDescription] = React.useState();
+    const [userAvatar, setUserAvatar] = React.useState();
+
+    React.useEffect (() => {
+        Promise.all([
+            api.getUserData('/users/me'),
+            api.getInitialCards('/cards')
+        ])
+        .then ((values) => {
+            const [userData, initialCards] = values;
+            setUserName(userData.name);
+            setUserDescription(userData.about);
+            setUserAvatar(userData.avatar)
+        })
+        .catch(err => console.log(err));
+    }, []
+    );
 
     return (
         <>
@@ -12,16 +32,16 @@ function Main (props) {
 
                     <div className="profile__avatar">
                         <button type="button" className="profile__photo-edit" onClick={props.onEditAvatar}>
-                            <img src="#" className="profile__photo" alt="Фото профиля" />
+                            <img src={userAvatar} className="profile__photo" alt="Фото профиля" />
                         </button>
                             <div className="profile__info">
                                 <div className="profile__heading">
-                                    <h1 className="profile__name"></h1>
+                                    <h1 className="profile__name">{userName}</h1>
                                     <button type="button" className="profile__edit-button" onClick={props.onEditProfile}>
                                         <img src={props.editButtonImage} className="profile__edit-image" alt="Правка" />
                                     </button>
                                 </div>
-                                <p className="profile__profession"></p>
+                                <p className="profile__profession">{userDescription}</p>
                             </div>
 
                     </div>
