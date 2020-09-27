@@ -1,14 +1,5 @@
 import React from 'react';
-
-function handleEditAvatarClick () {
-
-};
-
-function handleEditProfileClick () {
-
-};
-
-
+import PopupWithForm from './PopupWithForm.js';
 
 function Main (props) {
 
@@ -63,62 +54,44 @@ function Main (props) {
 
             </main>
 
-            <section className="popup popup_btn_edit-profile">
+            <PopupWithForm name='edit-profile' title='Редактировать профиль' buttonName='Сохранить' closeButtonImage={props.addButtonImage}>
+                <fieldset className="popup__inputs-container">
+                    <label className ="popup__input-container">
+                        <input id="input__name" type="text" className="popup__item popup__item_el_name" placeholder="Ваше имя" name="name" minLength="2" maxLength="40" required />
+                        <span id="input__name-error" className="popup__input-error"></span>
+                    </label>
+                    <label className ="popup__input-container">
+                        <input id="input__profession" type="text" className="popup__item popup__item_el_profession" placeholder="Ваш род занятий" name="about" minLength="2" maxLength="200" required />
+                        <span id="input__profession-error" className="popup__input-error"></span>
+                    </label>
+                </fieldset>
+            </PopupWithForm>
 
-                <form name ="formEditProfile" className="popup__form" novalidate>
+            <PopupWithForm name='add-element' title='Новое место' buttonName='Создать' closeButtonImage={props.addButtonImage}>
+                <fieldset className="popup__inputs-container">
+                    <label className ="popup__input-container">
+                        <input id="input__place" type="text" className="popup__item popup__item_el_place" placeholder="Название" name="name" minLength="1" maxLength="30" required />
+                        <span id="input__place-error" className="popup__input-error"></span>
+                    </label>
+                    <label className ="popup__input-container">
+                        <input id="input__link" type="url" className="popup__item popup__item_el_link" placeholder="Ссылка на картинку" name="link" required />
+                        <span id="input__link-error" className="popup__input-error"></span>
+                    </label>
+                </fieldset>
+            </PopupWithForm>
 
-                    <h3 className="popup__heading">Редактировать профиль</h3>
-                    
-                    <fieldset className="popup__inputs-container">
-                        <label className ="popup__input-container">
-                            <input id="input__name" type="text" className="popup__item popup__item_el_name" placeholder="Ваше имя" name="name" minlength="2" maxlength="40" required />
-                            <span id="input__name-error" className="popup__input-error"></span>
-                        </label>
-                        <label className ="popup__input-container">
-                            <input id="input__profession" type="text" className="popup__item popup__item_el_profession" placeholder="Ваш род занятий" name="about" minlength="2" maxlength="200" required />
-                            <span id="input__profession-error" className="popup__input-error"></span>
-                        </label>
-                    </fieldset>
+            <PopupWithForm name='edit-avatar' title='Обновить аватар' buttonName='Сохранить' closeButtonImage={props.addButtonImage}>
+                <fieldset className="popup__inputs-container">
+                    <label className ="popup__input-container">
+                        <input id="input__link" type="url" className="popup__item popup__item_el_link" placeholder="Ссылка на картинку" name="avatar" required />
+                        <span id="input__link-error" className="popup__input-error"></span>
+                    </label>
+                </fieldset>
+            </PopupWithForm>
 
-                    <button type="submit" className="popup__save-button">Сохранить</button>
-                    
-                    <button type="button" className="popup__close-button">
-                        <img src="./images/Add-button__plus.svg" className="popup__close-image" alt="Закрыть" />
-                    </button>
-
-                </form>
-
-                </section>
-
-            <section className="popup popup_btn_add-element">
-
-                <form name ="formAddElement" className="popup__form" novalidate>
-
-                    <h3 className="popup__heading">Новое место</h3>
-                    
-                    <fieldset className="popup__inputs-container">
-                        <label className ="popup__input-container">
-                            <input id="input__place" type="text" className="popup__item popup__item_el_place" placeholder="Название" name="name" minlength="1" maxlength="30" required />
-                            <span id="input__place-error" className="popup__input-error"></span>
-                        </label>
-                        <label className ="popup__input-container">
-                            <input id="input__link" type="url" className="popup__item popup__item_el_link" placeholder="Ссылка на картинку" name="link" required />
-                            <span id="input__link-error" className="popup__input-error"></span>
-                        </label>
-                    </fieldset>
-
-                    <button type="submit" className="popup__save-button">Создать</button>
-                    
-                    <button type="button" className="popup__close-button">
-                        <img src="./images/Add-button__plus.svg" className="popup__close-image" alt="Закрыть" />
-                    </button>
-
-                </form>
-
-            </section>
+            <PopupWithForm name='delete-element' title='Вы уверены?' buttonName='Да' closeButtonImage={props.addButtonImage} />
 
             <section className="popup popup_btn_card-image">
-
                 <div className='card-full-size'>
                     <img className='card-full-size__image' src='#' alt='' />
                     <h3 className='card-full-size__heading'>
@@ -127,45 +100,6 @@ function Main (props) {
                         <img src="./images/Add-button__plus.svg" className="popup__close-image" alt="Закрыть" />
                     </button>
                 </div>
-
-            </section>
-
-            <section className="popup popup_btn_delete-element">
-
-                <form name="formDeleteElement" className="popup__form" novalidate>
-                    
-                    <h3 className="popup__heading">Вы уверены?</h3>
-                    <button type="submit" className="popup__save-button">Да</button>
-
-                    <button type="button" className="popup__close-button">
-                        <img src="./images/Add-button__plus.svg" className="popup__close-image" alt="Закрыть" />
-                    </button>
-
-                </form>
-
-            </section>
-
-            <section className="popup popup_btn_edit-avatar">
-
-                <form name ="formEditAvatar" className="popup__form" novalidate>
-
-                    <h3 className="popup__heading">Обновить аватар</h3>
-                    
-                    <fieldset className="popup__inputs-container">
-                        <label className ="popup__input-container">
-                            <input id="input__link" type="url" className="popup__item popup__item_el_link" placeholder="Ссылка на картинку" name="avatar" required />
-                            <span id="input__link-error" className="popup__input-error"></span>
-                        </label>
-                    </fieldset>
-
-                    <button type="submit" className="popup__save-button">Сохранить</button>
-                    
-                    <button type="button" className="popup__close-button">
-                        <img src="./images/Add-button__plus.svg" className="popup__close-image" alt="Закрыть" />
-                    </button>
-
-                </form>
-
             </section>
 
         </>
