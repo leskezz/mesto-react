@@ -2,12 +2,14 @@ import React from 'react';
 import PopupWithForm from './PopupWithForm.js';
 import ImagePopup from './ImagePopup.js';
 import api from '../utils/Api.js';
+import Card from './Card.js'
 
 function Main (props) {
 
     const [userName, setUserName] = React.useState();
     const [userDescription, setUserDescription] = React.useState();
     const [userAvatar, setUserAvatar] = React.useState();
+    const [cards, setCards] = React.useState([]);
 
     React.useEffect (() => {
         Promise.all([
@@ -18,7 +20,8 @@ function Main (props) {
             const [userData, initialCards] = values;
             setUserName(userData.name);
             setUserDescription(userData.about);
-            setUserAvatar(userData.avatar)
+            setUserAvatar(userData.avatar);
+            setCards(initialCards);
         })
         .catch(err => console.log(err));
     }, []
@@ -54,8 +57,14 @@ function Main (props) {
                 <section className="elements">
 
                     <ul className="elements__grid">
-                        
-                        <li className='element element_empty'>Здесь пока ничего нет</li>
+
+                        {cards.length ?
+                        cards.map (card => (
+                            <Card key={card._id} card={card} deleteCardButton={props.deleteCardButton} />
+                        ))
+                        : 
+                        <li className='element element_empty'>Здесь пока ничего нет</li>                    
+                        }
 
                     </ul>
 
