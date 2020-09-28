@@ -21,6 +21,6 @@ function Card (props) {
             </div>
         </li>
     )
-};
+}
 
 export default Card;

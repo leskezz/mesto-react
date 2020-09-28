@@ -112,10 +112,10 @@ function Main (props) {
 
             <PopupWithForm name='delete-element' title='Вы уверены?' buttonName='Да' closeButtonImage={addButtonImage} onClose={props.closeAllPopups} />
 
-            <ImagePopup closeButtonImage={addButtonImage} onClose={props.closeAllPopups} card={props.selectedCard} isOpen={props.isCardImagePopupOpen} />
+            <ImagePopup closeButtonImage={addButtonImage} onClose={props.closeAllPopups} card={props.selectedCard} />
 
         </>
     )
-};
+}
 
 export default Main;

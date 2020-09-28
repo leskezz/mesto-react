@@ -11,31 +11,28 @@ function App() {
     const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
     const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
     const [selectedCard, setSelectedCard] = React.useState({});
-    const [isCardImagePopupOpen, setCardImagePopupOpen] = React.useState(false);
 
     function handleEditAvatarClick() {
         setEditAvatarPopupOpen(true);
-    };
+    }
 
     function handleEditProfileClick() {
         setEditProfilePopupOpen(true);
-    };
+    }
 
     function handleAddPlaceClick () {
         setAddPlacePopupOpen(true);
-    };
+    }
 
     function closeAllPopups() {
         setEditAvatarPopupOpen(false);
         setEditProfilePopupOpen(false);
         setAddPlacePopupOpen(false);
-        setCardImagePopupOpen(false);
         setSelectedCard({});
-    };
+    }
 
     function handleCardClick(clickedCard) {
         setSelectedCard(clickedCard);
-        setCardImagePopupOpen(true);
     }
 
     return (
@@ -43,7 +40,7 @@ function App() {
 
         <Header logo={logo} />
 
-        <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} isEditProfilePopupOpen={isEditProfilePopupOpen} isAddPlacePopupOpen={isAddPlacePopupOpen} isEditAvatarPopupOpen={isEditAvatarPopupOpen} closeAllPopups={closeAllPopups} onCardClick={handleCardClick} selectedCard={selectedCard} isCardImagePopupOpen={isCardImagePopupOpen} />
+        <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} isEditProfilePopupOpen={isEditProfilePopupOpen} isAddPlacePopupOpen={isAddPlacePopupOpen} isEditAvatarPopupOpen={isEditAvatarPopupOpen} closeAllPopups={closeAllPopups} onCardClick={handleCardClick} selectedCard={selectedCard} />
 
         <Footer />
 

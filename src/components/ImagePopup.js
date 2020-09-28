@@ -2,7 +2,7 @@ import React from 'react';
 
 function ImagePopup (props) {
     return (
-        <section className={`popup popup_btn_card-image ${props.isOpen ? 'popup_opened' : ''}`}>
+        <section className={`popup popup_btn_card-image ${props.card.link ? 'popup_opened' : ''}`}>
             <div className='card-full-size'>
                 <img className='card-full-size__image' src={props.card.link} alt={props.card.name} />
                 <h3 className='card-full-size__heading'>{props.card.name}</h3>
@@ -12,6 +12,6 @@ function ImagePopup (props) {
             </div>
         </section>
     )
-};
+}
 
 export default ImagePopup;
