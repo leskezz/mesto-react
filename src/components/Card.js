@@ -9,6 +9,8 @@ function Card (props) {
         props.onCardClick(props.card)
     }
 
+    const isLiked = props.card.likes.some (i => i._id === currentUser._id);
+
     return (
         <li className="element">
             <img src={props.card.link} alt={props.card.name} className="element__image" onClick={handleClick} />
@@ -19,7 +21,7 @@ function Card (props) {
             <div className="element__info">
                 <h3 className="element__heading">{props.card.name}</h3>
                 <div className="element__like-container">
-                    <button type="button" className="element__like-button"></button>
+                    <button type="button" className={`element__like-button ${isLiked && 'element__like-button_active'}`}></button>
                     <p className="element__like-count">{props.card.likes.length}</p>
                 </div>
             </div>
