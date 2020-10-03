@@ -1,43 +1,12 @@
 import React from 'react';
 import editButtonImage from '../images/Edit-button__pen.svg';
 import deleteCardButton from '../images/Delete-button.svg'
-import api from '../utils/Api.js';
 import Card from './Card.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 
 function Main (props) {
 
-    const [cards, setCards] = React.useState([]);
-
     const currentUser = React.useContext(CurrentUserContext);
-
-    React.useEffect (() => {
-        api.getInitialCards('/cards')
-        .then ((value) => {
-            const initialCards = value;
-            setCards(initialCards);
-        })
-        .catch(err => console.log(err));
-    }, []
-    );
-
-    function handleCardLike(card) {
-        const isLiked = card.likes.some (i => i._id === currentUser._id);
-
-        api.changeLikeCardStatus('/cards/likes', card._id, isLiked)
-        .then((newCard) => {
-            const newCards = cards.map((c) => c._id === card._id ? newCard : c);
-            setCards(newCards);
-        });
-    }
-
-    function handleCardDelete(card) {
-        api.deleteCard('/cards', card)
-        .then(() => {
-            const newCards = cards.filter(c => c._id !== card._id);
-            setCards(newCards);
-        })
-    }
 
     return (
         <>
@@ -70,9 +39,9 @@ function Main (props) {
 
                     <ul className="elements__grid">
 
-                        {cards.length ?
-                        cards.map (card => (
-                            <Card key={card._id} card={card} deleteCardButton={deleteCardButton} onCardClick={props.onCardClick} onCardLike={handleCardLike} onCardDelete={handleCardDelete} />
+                        {props.cards.length ?
+                        props.cards.map (card => (
+                            <Card key={card._id} card={card} deleteCardButton={deleteCardButton} onCardClick={props.onCardClick} onCardLike={props.onCardLike} onCardDelete={props.onCardDelete} />
                         ))
                         : 
                         <li className='element element_empty'>Здесь пока ничего нет</li>                    

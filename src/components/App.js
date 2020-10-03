@@ -9,7 +9,8 @@ import PopupWithForm from './PopupWithForm.js';
 import ImagePopup from './ImagePopup.js';
 import addButtonImage from '../images/Add-button__plus.svg';
 import EditProfilePopup from './EditProfilePopup.js';
-import EditAvatarPopup from './EditAvatarPopup.js'
+import EditAvatarPopup from './EditAvatarPopup.js';
+import AddPlacePopup from './AddPlacePopup.js';
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
     const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
     const [selectedCard, setSelectedCard] = React.useState({});
     const [currentUser, setCurrentUser] = React.useState({});
+    const [cards, setCards] = React.useState([]);
 
     React.useEffect (() => {
         Promise.all([
@@ -27,6 +29,7 @@ function App() {
         ])
         .then ((values) => {
             const [userData, initialCards] = values;
+            setCards(initialCards);
             setCurrentUser(userData);
         })
         .catch(err => console.log(err));
@@ -74,32 +77,46 @@ function App() {
         .catch(err => console.log(err));
     }
 
+    function handleCardLike(card) {
+        const isLiked = card.likes.some (i => i._id === currentUser._id);
+
+        api.changeLikeCardStatus('/cards/likes', card._id, isLiked)
+        .then((newCard) => {
+            const newCards = cards.map((c) => c._id === card._id ? newCard : c);
+            setCards(newCards);
+        })
+        .catch(err => console.log(err));
+    }
+
+    function handleCardDelete(card) {
+        api.deleteCard('/cards', card)
+        .then(() => {
+            const newCards = cards.filter(c => c._id !== card._id);
+            setCards(newCards);
+        })
+        .catch(err => console.log(err));
+    }
+
+    function handleAddPlaceSubmit(newCard) {
+        api.postNewCard('/cards', newCard)
+        .then((addedCard) => {
+            setCards([addedCard, ...cards]);
+            closeAllPopups();
+        })
+        .catch(err => console.log(err));
+    }
+
     return (
     <div className="page">
         <CurrentUserContext.Provider value={currentUser}>
             <Header logo={logo} />
-            <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} onCardClick={handleCardClick} addButtonImage={addButtonImage} />
+            <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} onCardClick={handleCardClick} addButtonImage={addButtonImage} cards={cards} onCardLike={handleCardLike} onCardDelete={handleCardDelete} />
             <Footer />
 
             <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} closeButtonImage={addButtonImage} onUpdateUser={handleUpdateUser}/>
-
             <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} closeButtonImage={addButtonImage} onUpdateAvatar={handleUpdateAvatar} />
-
-            <PopupWithForm name='add-element' title='Новое место' buttonName='Создать' closeButtonImage={addButtonImage} isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
-                <fieldset className="popup__inputs-container">
-                    <label className ="popup__input-container">
-                        <input id="input__place" type="text" className="popup__item popup__item_el_place" placeholder="Название" name="name" minLength="1" maxLength="30" required />
-                        <span id="input__place-error" className="popup__input-error"></span>
-                    </label>
-                    <label className ="popup__input-container">
-                        <input id="input__link" type="url" className="popup__item popup__item_el_link" placeholder="Ссылка на картинку" name="link" required />
-                        <span id="input__link-error" className="popup__input-error"></span>
-                    </label>
-                </fieldset>
-            </PopupWithForm>
-
+            <AddPlacePopup closeButtonImage={addButtonImage} isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} />
             <PopupWithForm name='delete-element' title='Вы уверены?' buttonName='Да' closeButtonImage={addButtonImage} onClose={closeAllPopups} />
-
             <ImagePopup closeButtonImage={addButtonImage} onClose={closeAllPopups} card={selectedCard} />
         </CurrentUserContext.Provider>
     </div>

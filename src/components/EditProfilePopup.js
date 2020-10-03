@@ -34,11 +34,11 @@ function EditProfilePopup(props) {
         <PopupWithForm name='edit-profile' title='Редактировать профиль' buttonName='Сохранить' closeButtonImage={props.closeButtonImage} isOpen={props.isOpen} onClose={props.onClose} onSubmit={handleSubmit}>
             <fieldset className="popup__inputs-container">
                 <label className ="popup__input-container">
-                    <input id="input__name" type="text" value={name} onChange={handleChangeName} className="popup__item popup__item_el_name" placeholder="Ваше имя" name="name" minLength="2" maxLength="40" required />
+                    <input id="input__name" type="text" value={name || ''} onChange={handleChangeName} className="popup__item popup__item_el_name" placeholder="Ваше имя" name="name" minLength="2" maxLength="40" required />
                     <span id="input__name-error" className="popup__input-error"></span>
                 </label>
                 <label className ="popup__input-container">
-                    <input id="input__profession" type="text" value={description} onChange={handleChangeDescription} className="popup__item popup__item_el_profession" placeholder="Ваш род занятий" name="about" minLength="2" maxLength="200" required />
+                    <input id="input__profession" type="text" value={description || ''} onChange={handleChangeDescription} className="popup__item popup__item_el_profession" placeholder="Ваш род занятий" name="about" minLength="2" maxLength="200" required />
                     <span id="input__profession-error" className="popup__input-error"></span>
                 </label>
             </fieldset>
