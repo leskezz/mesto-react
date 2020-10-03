@@ -6,24 +6,18 @@ import PopupWithForm from './PopupWithForm.js';
 import ImagePopup from './ImagePopup.js';
 import api from '../utils/Api.js';
 import Card from './Card.js';
+import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 
 function Main (props) {
 
-    const [userName, setUserName] = React.useState('');
-    const [userDescription, setUserDescription] = React.useState('');
-    const [userAvatar, setUserAvatar] = React.useState('');
     const [cards, setCards] = React.useState([]);
 
+    const currentUser = React.useContext(CurrentUserContext);
+
     React.useEffect (() => {
-        Promise.all([
-            api.getUserData('/users/me'),
-            api.getInitialCards('/cards')
-        ])
-        .then ((values) => {
-            const [userData, initialCards] = values;
-            setUserName(userData.name);
-            setUserDescription(userData.about);
-            setUserAvatar(userData.avatar);
+        api.getInitialCards('/cards')
+        .then ((value) => {
+            const initialCards = value;
             setCards(initialCards);
         })
         .catch(err => console.log(err));
@@ -38,16 +32,16 @@ function Main (props) {
 
                     <div className="profile__avatar">
                         <button type="button" className="profile__photo-edit" onClick={props.onEditAvatar}>
-                            <img src={userAvatar} className="profile__photo" alt="Фото профиля" />
+                            <img src={currentUser.avatar} className="profile__photo" alt="Фото профиля" />
                         </button>
                             <div className="profile__info">
                                 <div className="profile__heading">
-                                    <h1 className="profile__name">{userName}</h1>
+                                    <h1 className="profile__name">{currentUser.name}</h1>
                                     <button type="button" className="profile__edit-button" onClick={props.onEditProfile}>
                                         <img src={editButtonImage} className="profile__edit-image" alt="Правка" />
                                     </button>
                                 </div>
-                                <p className="profile__profession">{userDescription}</p>
+                                <p className="profile__profession">{currentUser.about}</p>
                             </div>
 
                     </div>

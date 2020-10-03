@@ -1,6 +1,9 @@
 import React from 'react';
+import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 
 function Card (props) {
+
+    const currentUser = React.useContext(CurrentUserContext);
 
     function handleClick () {
         props.onCardClick(props.card)
@@ -9,9 +12,10 @@ function Card (props) {
     return (
         <li className="element">
             <img src={props.card.link} alt={props.card.name} className="element__image" onClick={handleClick} />
-            <button type="button" className="element__delete-button">
+            {props.card.owner._id !== currentUser._id && 
+                <button type="button" className="element__delete-button">
                 <img src={props.deleteCardButton} className='element__delete-image' alt="Удалить" />
-            </button>
+            </button> }
             <div className="element__info">
                 <h3 className="element__heading">{props.card.name}</h3>
                 <div className="element__like-container">
