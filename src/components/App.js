@@ -5,6 +5,10 @@ import Main from './Main.js';
 import Footer from './Footer.js';
 import api from '../utils/Api.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
+import PopupWithForm from './PopupWithForm.js';
+import ImagePopup from './ImagePopup.js';
+import addButtonImage from '../images/Add-button__plus.svg';
+import EditProfilePopup from './EditProfilePopup.js';
 
 
 function App() {
@@ -51,12 +55,49 @@ function App() {
         setSelectedCard(clickedCard);
     }
 
+    function handleUpdateUser(newUser){
+        api.patchProfile('/users/me', newUser)
+        .then(newProfile => {
+            setCurrentUser(newProfile);
+            closeAllPopups();
+        })
+        .catch(err => console.log(err));
+    }
+
     return (
     <div className="page">
         <CurrentUserContext.Provider value={currentUser}>
             <Header logo={logo} />
-            <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} isEditProfilePopupOpen={isEditProfilePopupOpen} isAddPlacePopupOpen={isAddPlacePopupOpen} isEditAvatarPopupOpen={isEditAvatarPopupOpen} closeAllPopups={closeAllPopups} onCardClick={handleCardClick} selectedCard={selectedCard} />
+            <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} onCardClick={handleCardClick} addButtonImage={addButtonImage} />
             <Footer />
+
+            <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} closeButtonImage={addButtonImage} onUpdateUser={handleUpdateUser}/>
+
+            <PopupWithForm name='add-element' title='Новое место' buttonName='Создать' closeButtonImage={addButtonImage} isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
+                <fieldset className="popup__inputs-container">
+                    <label className ="popup__input-container">
+                        <input id="input__place" type="text" className="popup__item popup__item_el_place" placeholder="Название" name="name" minLength="1" maxLength="30" required />
+                        <span id="input__place-error" className="popup__input-error"></span>
+                    </label>
+                    <label className ="popup__input-container">
+                        <input id="input__link" type="url" className="popup__item popup__item_el_link" placeholder="Ссылка на картинку" name="link" required />
+                        <span id="input__link-error" className="popup__input-error"></span>
+                    </label>
+                </fieldset>
+            </PopupWithForm>
+
+            <PopupWithForm name='edit-avatar' title='Обновить аватар' buttonName='Сохранить' closeButtonImage={addButtonImage} isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}>
+                <fieldset className="popup__inputs-container">
+                    <label className ="popup__input-container">
+                        <input id="input__link" type="url" className="popup__item popup__item_el_link" placeholder="Ссылка на картинку" name="avatar" required />
+                        <span id="input__link-error" className="popup__input-error"></span>
+                    </label>
+                </fieldset>
+            </PopupWithForm>
+
+            <PopupWithForm name='delete-element' title='Вы уверены?' buttonName='Да' closeButtonImage={addButtonImage} onClose={closeAllPopups} />
+
+            <ImagePopup closeButtonImage={addButtonImage} onClose={closeAllPopups} card={selectedCard} />
         </CurrentUserContext.Provider>
     </div>
     );
