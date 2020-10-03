@@ -13,13 +13,17 @@ function Card (props) {
         props.onCardLike(props.card);
     }
 
+    function handleDeleteClick () {
+        props.onCardDelete(props.card);
+    }
+
     const isLiked = props.card.likes.some (i => i._id === currentUser._id);
 
     return (
         <li className="element">
             <img src={props.card.link} alt={props.card.name} className="element__image" onClick={handleClick} />
-            {props.card.owner._id !== currentUser._id && 
-                <button type="button" className="element__delete-button">
+            {props.card.owner._id === currentUser._id && 
+                <button type="button" className="element__delete-button" onClick={handleDeleteClick}>
                 <img src={props.deleteCardButton} className='element__delete-image' alt="Удалить" />
             </button> }
             <div className="element__info">

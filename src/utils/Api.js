@@ -66,7 +66,7 @@ class Api {
     }
 
     deleteCard (cardsUrl, cardToDelete) {
-        return this._getResponseData(`${this._baseUrl}${cardsUrl}/${cardToDelete.id}`, {
+        return this._getResponseData(`${this._baseUrl}${cardsUrl}/${cardToDelete._id}`, {
             method: 'DELETE',
             headers: this._headers 
         })

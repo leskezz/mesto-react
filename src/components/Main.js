@@ -34,6 +34,14 @@ function Main (props) {
         });
     }
 
+    function handleCardDelete(card) {
+        api.deleteCard('/cards', card)
+        .then(() => {
+            const newCards = cards.filter(c => c._id !== card._id);
+            setCards(newCards);
+        })
+    }
+
     return (
         <>
             <main className="content">
@@ -67,7 +75,7 @@ function Main (props) {
 
                         {cards.length ?
                         cards.map (card => (
-                            <Card key={card._id} card={card} deleteCardButton={deleteCardButton} onCardClick={props.onCardClick} onCardLike={handleCardLike} />
+                            <Card key={card._id} card={card} deleteCardButton={deleteCardButton} onCardClick={props.onCardClick} onCardLike={handleCardLike} onCardDelete={handleCardDelete} />
                         ))
                         : 
                         <li className='element element_empty'>Здесь пока ничего нет</li>                    
