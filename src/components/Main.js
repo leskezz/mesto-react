@@ -24,6 +24,16 @@ function Main (props) {
     }, []
     );
 
+    function handleCardLike(card) {
+        const isLiked = card.likes.some (i => i._id === currentUser._id);
+
+        api.changeLikeCardStatus('/cards/likes', card._id, isLiked)
+        .then((newCard) => {
+            const newCards = cards.map((c) => c._id === card._id ? newCard : c);
+            setCards(newCards);
+        });
+    }
+
     return (
         <>
             <main className="content">
@@ -57,7 +67,7 @@ function Main (props) {
 
                         {cards.length ?
                         cards.map (card => (
-                            <Card key={card._id} card={card} deleteCardButton={deleteCardButton} onCardClick={props.onCardClick} />
+                            <Card key={card._id} card={card} deleteCardButton={deleteCardButton} onCardClick={props.onCardClick} onCardLike={handleCardLike} />
                         ))
                         : 
                         <li className='element element_empty'>Здесь пока ничего нет</li>                    

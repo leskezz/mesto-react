@@ -51,24 +51,24 @@ class Api {
 
     }
 
+    changeLikeCardStatus(likesUrl, cardId, isLiked) {
+        if (!isLiked) {
+            return this._getResponseData(`${this._baseUrl}${likesUrl}/${cardId}`, {
+                method: 'PUT',
+                headers: this._headers 
+            })
+        } else {
+            return this._getResponseData(`${this._baseUrl}${likesUrl}/${cardId}`, {
+                method: 'DELETE',
+                headers: this._headers 
+            })
+        }
+    }
+
     deleteCard (cardsUrl, cardToDelete) {
         return this._getResponseData(`${this._baseUrl}${cardsUrl}/${cardToDelete.id}`, {
             method: 'DELETE',
-            headers: this._headers, 
-        })
-    }
-
-    putLike (likesUrl, cardId){
-        return this._getResponseData(`${this._baseUrl}${likesUrl}/${cardId}`, {
-            method: 'PUT',
-            headers: this._headers, 
-        })
-    }
-
-    deleteLike (likesUrl, cardId){
-        return this._getResponseData(`${this._baseUrl}${likesUrl}/${cardId}`, {
-            method: 'DELETE',
-            headers: this._headers, 
+            headers: this._headers 
         })
     }
 
