@@ -9,6 +9,7 @@ import PopupWithForm from './PopupWithForm.js';
 import ImagePopup from './ImagePopup.js';
 import addButtonImage from '../images/Add-button__plus.svg';
 import EditProfilePopup from './EditProfilePopup.js';
+import EditAvatarPopup from './EditAvatarPopup.js'
 
 
 function App() {
@@ -64,6 +65,15 @@ function App() {
         .catch(err => console.log(err));
     }
 
+    function handleUpdateAvatar(newAvatar) {
+        api.patchAvatar('/users/me/avatar', newAvatar)
+        .then(newProfile => {
+            setCurrentUser(newProfile);
+            closeAllPopups();
+        })
+        .catch(err => console.log(err));
+    }
+
     return (
     <div className="page">
         <CurrentUserContext.Provider value={currentUser}>
@@ -73,6 +83,8 @@ function App() {
 
             <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} closeButtonImage={addButtonImage} onUpdateUser={handleUpdateUser}/>
 
+            <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} closeButtonImage={addButtonImage} onUpdateAvatar={handleUpdateAvatar} />
+
             <PopupWithForm name='add-element' title='Новое место' buttonName='Создать' closeButtonImage={addButtonImage} isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
                 <fieldset className="popup__inputs-container">
                     <label className ="popup__input-container">
@@ -81,15 +93,6 @@ function App() {
                     </label>
                     <label className ="popup__input-container">
                         <input id="input__link" type="url" className="popup__item popup__item_el_link" placeholder="Ссылка на картинку" name="link" required />
-                        <span id="input__link-error" className="popup__input-error"></span>
-                    </label>
-                </fieldset>
-            </PopupWithForm>
-
-            <PopupWithForm name='edit-avatar' title='Обновить аватар' buttonName='Сохранить' closeButtonImage={addButtonImage} isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}>
-                <fieldset className="popup__inputs-container">
-                    <label className ="popup__input-container">
-                        <input id="input__link" type="url" className="popup__item popup__item_el_link" placeholder="Ссылка на картинку" name="avatar" required />
                         <span id="input__link-error" className="popup__input-error"></span>
                     </label>
                 </fieldset>

@@ -72,12 +72,12 @@ class Api {
         })
     }
 
-    patchAvatar(avatarUrl, avatar){
+    patchAvatar(avatarUrl, newAvatar){
         return this._getResponseData(`${this._baseUrl}${avatarUrl}`, {
             method: 'PATCH',
             headers: this._headers, 
             body: JSON.stringify({
-                avatar: avatar
+                avatar: newAvatar.avatar
             })
         })
     }
